@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,8 +10,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { ArrowDownAZ } from "lucide-react";
 import { backendInstance } from "@/http";
-import Token from "@/types";
+import type Token from "@/types";
 
 interface CryptoDataTableProps {
   firstDate: Date;
@@ -17,14 +21,15 @@ interface CryptoDataTableProps {
 }
 
 export const CryptoDataTable = () => {
-  const [Tokens, setTokens] = useState<Token[]>([]);
+  const [tokens, setTokens] = useState<Token[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSorted, setIsSorted] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(null); 
+      setError(null);
 
       try {
         const response = await backendInstance.get("/Top");
@@ -53,6 +58,19 @@ export const CryptoDataTable = () => {
     fetchData();
   }, []);
 
+  const sortByVolume = () => {
+    let sortedTokens = [...tokens];
+    if (isSorted) {
+      sortedTokens = [...tokens].sort((a, b) => a.volume - b.volume);
+      setIsSorted(false);
+    } else {
+      sortedTokens = [...tokens].sort((a, b) => b.volume - a.volume);
+      setIsSorted(true);
+    }
+
+    setTokens(sortedTokens);
+  };
+
   if (loading) {
     return <div>Loading tokens...</div>;
   }
@@ -69,16 +87,30 @@ export const CryptoDataTable = () => {
           <TableHead className="w-[100px]">Номер</TableHead>
           <TableHead>Токен</TableHead>
           <TableHead className="">Изменение объема в процентах</TableHead>
-          <TableHead className="text-right">Объем валюты $</TableHead>
+          <TableHead className="text-right">
+            <div className="flex items-center justify-end gap-2">
+              Объем валюты $
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={sortByVolume}
+                className="ml-2 h-8 w-8 p-0"
+                title="Сортировать по объему"
+              >
+                <ArrowDownAZ className="h-4 w-4" />
+                <span className="sr-only">Сортировать по объему</span>
+              </Button>
+            </div>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Tokens.map((token, index) => (
+        {tokens.map((token, index) => (
           <TableRow key={token.name}>
-            <TableCell>{index + 1}</TableCell>
+            <TableCell className="font-medium">{index + 1}</TableCell>
             <TableCell>{token.name}</TableCell>
             <TableCell>{token.price.volDiff1}</TableCell>
-            <TableCell>{token.volume}</TableCell>
+            <TableCell className="text-right">{token.volume}</TableCell>
           </TableRow>
         ))}
       </TableBody>
