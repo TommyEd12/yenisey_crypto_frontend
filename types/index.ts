@@ -36,5 +36,13 @@ interface Price {
   volDiff30: number;
   diff30d: number;
 }
+export interface changedToken {
+  currencyName: string;
+  created: string;
+  contract: string;
+  volume: number;
+  percentageChange: number;
+  valueChange: number;
+}
 
 export default Token;

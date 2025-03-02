@@ -39,7 +39,6 @@ export const CryptoDataTable = () => {
         console.error("Failed to fetch tokens:", e);
         setError("Failed to load tokens. Please try again later.");
         if (e.code === "ECONNABORTED") {
-          // Axios timeout error code
           setError(
             "Request timed out. Please check your connection or try again later."
           );
@@ -72,7 +71,7 @@ export const CryptoDataTable = () => {
   };
 
   if (loading) {
-    return <div>Loading tokens...</div>;
+    return <div className='text-white p-3'>Загрузка токенов...</div>;
   }
 
   if (error) {
