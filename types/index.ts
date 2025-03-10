@@ -44,5 +44,13 @@ export interface changedToken {
   percentageChange: number;
   valueChange: number;
 }
+export interface opsToken {
+  currencyName: string;
+  created: string;
+  contract: string;
+  countOps: number;
+  percentageChange: number;
+  valueChange: number;
+}
 
 export default Token;

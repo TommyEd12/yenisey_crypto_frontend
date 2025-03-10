@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowDownAZ, Search } from "lucide-react"
 import { backendInstance } from "@/http"
 import { format } from "date-fns"
-import { DatePicker } from "@/components/ui/datePicker"
+import { DateTimePicker } from "@/components/ui/date-picker"
 import { ru } from "date-fns/locale"
 import type { changedToken } from "@/types"
 import { CustomTooltip } from "@/components/ui/tooltip"
@@ -86,13 +86,13 @@ export const Page = () => {
       <div className="space-y-4 mr-4">
         <div className="flex flex-col sm:flex-row gap-3 ml-3 items-end">
           <div className="flex items-center">
-            <label className="text-sm font-medium text-white mr-3">Начальная дата</label>
-            <DatePicker selected={firstDate} onSelect={setFirstDate} locale={ru} disabled={loading} />
+            <label className="text-sm text-nowrap font-medium dark:text-white mr-3">Начальная дата</label>
+            <DateTimePicker selected={firstDate}  onSelect={setFirstDate} locale={ru} disabled={loading} />
           </div>
 
           <div className="flex items-center">
-            <label className="text-sm font-medium text-white mr-3">Конечная дата</label>
-            <DatePicker selected={secondDate} onSelect={setSecondDate} locale={ru} disabled={loading} />
+            <label className="text-sm text-nowrap font-medium dark:text-white mr-3">Конечная дата</label>
+            <DateTimePicker selected={secondDate} onSelect={setSecondDate} locale={ru} disabled={loading} />
           </div>
 
           <Button onClick={fetchDataByDateRange} disabled={loading} variant="outline">
@@ -117,7 +117,7 @@ export const Page = () => {
           <div className="text-center p-4">Загрузка токенов...</div>
         ) : (
           <Table className="table-fixed ">
-            <TableCaption>
+            <TableCaption className='pb-1 text-center'>
               Список токенов по объему за период {format(firstDate, "dd.MM.yyyy")} - {format(secondDate, "dd.MM.yyyy")}
             </TableCaption>
             <TableHeader>

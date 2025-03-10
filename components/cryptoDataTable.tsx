@@ -80,7 +80,7 @@ export const CryptoDataTable = () => {
 
   return (
     <Table className="table-fixed">
-      <TableCaption>Список токенов по объему.</TableCaption>
+      <TableCaption className="mb-1">Список токенов по объему</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Номер</TableHead>
