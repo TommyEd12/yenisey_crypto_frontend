@@ -11,10 +11,10 @@ export const Navbar = () => {
       </Link>
       <img src={cryptoIcon.src} className="mt-2 w-10 h-10 bg-transparent" />
       <section className="ml-3 mt-1 px-2 py-1  flex items-center ">
-        <Link href="/dateInfo" className="text-2xl px-2 py-1 bg-zinc-900 rounded-2xl">
+        <Link href="/dateInfo" className="text-2xl px-2 py-1 dark:bg-zinc-900 rounded-2xl">
           Объем $
         </Link>
-        <Link href="/tradingRates" className="text-2xl ml-5 px-2 py-1 bg-zinc-900 rounded-2xl">
+        <Link href="/tradingRates" className="text-2xl ml-5 px-2 py-1 dark:bg-zinc-900 rounded-2xl">
           Операции
         </Link>
         

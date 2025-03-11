@@ -19,6 +19,7 @@ import { ru } from "date-fns/locale";
 import type { changedToken, opsToken } from "@/types";
 import { CustomTooltip } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export const Page = () => {
   const [tokens, setTokens] = useState<opsToken[]>([]);
@@ -97,14 +98,10 @@ export const Page = () => {
   const sortByOverallCountOps = () => {
     let sortedTokens = [...filteredTokens];
     if (isSorted) {
-      sortedTokens = sortedTokens.sort(
-        (a, b) => a.countOps - b.countOps
-      );
+      sortedTokens = sortedTokens.sort((a, b) => a.countOps - b.countOps);
       setIsSorted(false);
     } else {
-      sortedTokens = sortedTokens.sort(
-        (a, b) => b.countOps - a.countOps
-      );
+      sortedTokens = sortedTokens.sort((a, b) => b.countOps - a.countOps);
       setIsSorted(true);
     }
 
@@ -193,7 +190,9 @@ export const Page = () => {
                   </Button>
                 </TableHead>
                 <TableHead className="">Изменение операций</TableHead>
-                <TableHead className="text-right"> <Button
+                <TableHead className="text-right">
+                  {" "}
+                  <Button
                     variant="ghost"
                     size="sm"
                     onClick={sortByOverallCountOps}
@@ -201,8 +200,12 @@ export const Page = () => {
                     title="Сортировать по количеству операций"
                   >
                     <ArrowDownAZ className="h-4 w-4" />
-                    <span className="sr-only">Сортировать по количеству операций</span>
-                  </Button> Общее количество </TableHead>
+                    <span className="sr-only">
+                      Сортировать по количеству операций
+                    </span>
+                  </Button>{" "}
+                  Общее количество{" "}
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -211,7 +214,9 @@ export const Page = () => {
                   <TableRow key={token.currencyName}>
                     <TableCell className="font-medium">{index + 1}</TableCell>
                     <TableCell className="font-medium">
-                      {token.currencyName}
+                      <Link href={`/tokens/${token.contract}`}>
+                        {token.currencyName}
+                      </Link>
                     </TableCell>
                     <TableCell className="font-medium">
                       <CustomTooltip content={token.contract}>

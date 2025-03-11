@@ -109,7 +109,7 @@ export const CryptoDataTable = () => {
             <TableCell className="font-medium">{index + 1}</TableCell>
             <TableCell>{token.name}</TableCell>
             <TableCell>{token.price.volDiff1}</TableCell>
-            <TableCell className="text-right">{token.volume}</TableCell>
+            <TableCell className="text-right">{token.cap}</TableCell>
           </TableRow>
         ))}
       </TableBody>
