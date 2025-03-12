@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} dark:bg-zinc-900 antialiased overflow-y: scroll overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} dark:bg-zinc-900 flex flex-nowrap antialiased overflow-y: scroll overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"
