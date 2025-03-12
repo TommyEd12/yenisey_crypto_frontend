@@ -59,7 +59,7 @@ export const TokenChart = ({ props }: tokenChartProps) => {
           <Bar
             activeBar={true}
             dataKey="countOps"
-            fill="var(--color-operations)"
+            fill="var(--color-countOps)"
             radius={4}
           />
         </BarChart>
