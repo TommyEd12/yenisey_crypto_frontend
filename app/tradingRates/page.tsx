@@ -117,6 +117,7 @@ export const Page = () => {
       <div className="space-y-4 mr-4">
         <div className="flex flex-col sm:flex-row gap-3 ml-3 items-end">
           <div className="flex items-center">
+            <h1 className="font-bold mb-1 text-xl dark:text-white mr-5 text-nowrap">Операции токенов</h1>
             <label className="text-sm font-medium text-nowrap dark:text-white mr-3">
               Начальная дата
             </label>

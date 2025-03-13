@@ -52,7 +52,11 @@ export interface tokenData {
   countOps: number;
   price: number;
   volume: number;
-
+}
+export interface baseToken {
+  id: number;
+  contract: string;
+  name: string;
 }
 export interface opsToken {
   currencyName: string;

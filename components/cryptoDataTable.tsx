@@ -71,7 +71,7 @@ export const CryptoDataTable = () => {
   };
 
   if (loading) {
-    return <div className='text-white p-3'>Загрузка токенов...</div>;
+    return <div className="dark:text-white p-3">Загрузка токенов...</div>;
   }
 
   if (error) {
@@ -105,7 +105,7 @@ export const CryptoDataTable = () => {
       </TableHeader>
       <TableBody>
         {tokens.map((token, index) => (
-          <TableRow key={token.name}>
+          <TableRow key={index}>
             <TableCell className="font-medium">{index + 1}</TableCell>
             <TableCell>{token.name}</TableCell>
             <TableCell>{token.price.volDiff1}</TableCell>

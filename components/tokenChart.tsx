@@ -15,14 +15,17 @@ interface tokenChartProps {
   props: { tokenAddress: string };
 }
 
+const chartConfigOps = {
+  countOps: {
+    label: "Операции",
+    color: "#7e22ce",
+  },
+} satisfies ChartConfig;
+
 const chartConfig = {
   volume: {
     label: "Объем",
     color: "#2563eb",
-  },
-  countOps: {
-    label: "Операции",
-    color: "#7e22ce",
   },
 } satisfies ChartConfig;
 export const TokenChart = ({ props }: tokenChartProps) => {
@@ -33,16 +36,16 @@ export const TokenChart = ({ props }: tokenChartProps) => {
         `metrics/tokenMetrics?tokenAddress=${props.tokenAddress}`
       );
       const tokenData: tokenData[] = response.data;
-      setTokenInfo(tokenData.slice(-60));
+      setTokenInfo(tokenData.slice(-100));
     };
     fetchData();
   }, []);
 
   return (
-    <div className="w-8/12 flex items-center max-h-screen h-screen">
+    <div className="w-full flex flex-col items-start max-h-screen h-screen">
       <ChartContainer
         config={chartConfig}
-        className="min-h-[200px] h-full w-full"
+        className="min-h-[100px] h-full w-6/12"
       >
         <BarChart accessibilityLayer data={tokenInfo}>
           <CartesianGrid vertical={false} />
@@ -56,12 +59,24 @@ export const TokenChart = ({ props }: tokenChartProps) => {
           <ChartTooltip content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />
           <Bar dataKey="volume" fill="var(--color-volume)" radius={1} />
-          <Bar
-            activeBar={true}
-            dataKey="countOps"
-            fill="var(--color-countOps)"
-            radius={4}
+        </BarChart>
+      </ChartContainer>
+      <ChartContainer
+        config={chartConfigOps}
+        className="min-h-[100px] h-full w-6/12"
+      >
+        <BarChart accessibilityLayer data={tokenInfo}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="created"
+            tickLine={true}
+            tickMargin={10}
+            axisLine={true}
+            tickFormatter={(value) => value.slice(0, 10)}
           />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Bar dataKey="countOps" fill="var(--color-countOps)" radius={1} />
         </BarChart>
       </ChartContainer>
     </div>
