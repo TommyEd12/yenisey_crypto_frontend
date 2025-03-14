@@ -18,19 +18,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { backendInstance } from "@/http";
 import type { baseToken } from "@/types";
-
+import { useQuery } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 
 export const Page = () => {
   const [tokens, setTokens] = useState<baseToken[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [fetchError, setError] = useState<string | null>(null);
   const [newContract, setNewContract] = useState<string>("");
   const [addingToken, setAddingToken] = useState<boolean>(false);
   const [addError, setAddError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchTokens();
-  }, []);
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["isAuthenticated"],
+    queryFn: async () => {
+      const res = await backendInstance.get("/user/profile");
+      return res;
+    },
+  });
+  if (isPending) {
+    return "Загрузка...";
+  }
+
+  if (error) {
+    redirect("/login");
+  }
 
   const fetchTokens = async () => {
     setLoading(true);
@@ -58,6 +71,9 @@ export const Page = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchTokens();
+  }, []);
 
   const handleAddToken = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +115,7 @@ export const Page = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error: {fetchError}</div>;
   }
 
   return (

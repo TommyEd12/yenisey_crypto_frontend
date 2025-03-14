@@ -20,15 +20,16 @@ import type { changedToken } from "@/types";
 import { CustomTooltip } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 
 export const Page = () => {
   const [tokens, setTokens] = useState<changedToken[]>([]);
   const [filteredTokens, setFilteredTokens] = useState<changedToken[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [fetchError, setError] = useState<string | null>(null);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
   const [firstDate, setFirstDate] = useState<Date>(
     new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
   );
@@ -78,6 +79,20 @@ export const Page = () => {
     );
     setFilteredTokens(filtered);
   }, [searchQuery, tokens]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["isAuthenticated"],
+    queryFn: async () => {
+      const res = await backendInstance.get("/user/profile");
+      return res;
+    },
+  });
+  if (isPending) {
+    return "Загрузка...";
+  }
+
+  if (error) {
+    redirect("/login");
+  }
 
   const sortByVolume = () => {
     let sortedTokens = [...filteredTokens];
@@ -86,6 +101,22 @@ export const Page = () => {
       setIsSorted(false);
     } else {
       sortedTokens = sortedTokens.sort((a, b) => b.volume - a.volume);
+      setIsSorted(true);
+    }
+
+    setFilteredTokens(sortedTokens);
+  };
+  const sortByVolumeDiff = () => {
+    let sortedTokens = [...filteredTokens];
+    if (isSorted) {
+      sortedTokens = sortedTokens.sort(
+        (a, b) => a.percentageChange - b.percentageChange
+      );
+      setIsSorted(false);
+    } else {
+      sortedTokens = sortedTokens.sort(
+        (a, b) => b.percentageChange - a.percentageChange
+      );
       setIsSorted(true);
     }
 
@@ -147,7 +178,7 @@ export const Page = () => {
           </div>
         </div>
 
-        {error && <div className="text-red-500 p-2">{error}</div>}
+        {error && <div className="text-red-500 p-2">{fetchError}</div>}
 
         {loading ? (
           <div className="text-center p-4">Загрузка токенов...</div>
@@ -163,7 +194,22 @@ export const Page = () => {
                 <TableHead className="w-[100px]">Номер</TableHead>
                 <TableHead>Токен</TableHead>
                 <TableHead className="">Контракт</TableHead>
-                <TableHead className="">Изменение объема в процентах</TableHead>
+                <TableHead className="">
+                  {" "}
+                  <div className="flex items-center justify-start gap-1">
+                    Изменение в процентах
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={sortByVolumeDiff}
+                      className="ml-2 h-8 w-8 p-0"
+                      title="Сортировать по изменению"
+                    >
+                      <ArrowDownAZ className="h-4 w-4" />
+                      <span className="sr-only">Сортировать по изменению в процентах</span>
+                    </Button>
+                  </div>
+                </TableHead>
                 <TableHead className="">Изменение объема в долларах</TableHead>
                 <TableHead className="text-right">
                   <div className="flex items-center justify-end gap-2">

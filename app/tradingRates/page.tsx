@@ -20,12 +20,14 @@ import type { changedToken, opsToken } from "@/types";
 import { CustomTooltip } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 
 export const Page = () => {
   const [tokens, setTokens] = useState<opsToken[]>([]);
   const [filteredTokens, setFilteredTokens] = useState<opsToken[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [fetchError, setError] = useState<string | null>(null);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -33,6 +35,21 @@ export const Page = () => {
     new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
   );
   const [secondDate, setSecondDate] = useState<Date>(new Date());
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["isAuthenticated"],
+    queryFn: async () => {
+      const res = await backendInstance.get("/user/profile");
+      return res;
+    },
+  });
+  if (isPending) {
+    return "Загрузка...";
+  }
+
+  if (error) {
+    redirect("/login");
+  }
 
   const fetchDataByDateRange = async () => {
     setLoading(true);
@@ -117,7 +134,9 @@ export const Page = () => {
       <div className="space-y-4 mr-4">
         <div className="flex flex-col sm:flex-row gap-3 ml-3 items-end">
           <div className="flex items-center">
-            <h1 className="font-bold mb-1 text-xl dark:text-white mr-5 text-nowrap">Операции токенов</h1>
+            <h1 className="font-bold mb-1 text-xl dark:text-white mr-5 text-nowrap">
+              Операции токенов
+            </h1>
             <label className="text-sm font-medium text-nowrap dark:text-white mr-3">
               Начальная дата
             </label>
