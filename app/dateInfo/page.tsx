@@ -87,7 +87,7 @@ export const Page = () => {
     },
   });
   if (isPending) {
-    return "Загрузка...";
+    return <h1>Загрузка</h1>;
   }
 
   if (error) {

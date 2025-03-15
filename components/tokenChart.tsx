@@ -36,7 +36,7 @@ export const TokenChart = ({ props }: tokenChartProps) => {
         `metrics/tokenMetrics?tokenAddress=${props.tokenAddress}`
       );
       const tokenData: tokenData[] = response.data;
-      setTokenInfo(tokenData.slice(-100));
+      setTokenInfo(tokenData.slice(-200));
     };
     fetchData();
   }, []);
@@ -45,7 +45,7 @@ export const TokenChart = ({ props }: tokenChartProps) => {
     <div className="w-full flex flex-col items-start max-h-screen h-screen">
       <ChartContainer
         config={chartConfig}
-        className="min-h-[100px] h-full w-6/12"
+        className="min-h-[100px] h-full w-full"
       >
         <BarChart accessibilityLayer data={tokenInfo}>
           <CartesianGrid vertical={false} />
@@ -63,7 +63,7 @@ export const TokenChart = ({ props }: tokenChartProps) => {
       </ChartContainer>
       <ChartContainer
         config={chartConfigOps}
-        className="min-h-[100px] h-full w-6/12"
+        className="min-h-[100px] h-full w-full"
       >
         <BarChart accessibilityLayer data={tokenInfo}>
           <CartesianGrid vertical={false} />

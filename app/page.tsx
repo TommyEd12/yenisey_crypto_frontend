@@ -19,7 +19,7 @@ export default function Home() {
     }
       
   });
-  if (isPending) return "Загрузка...";
+  if (isPending) return <h1>Загрузка</h1>;
 
   if (error) redirect("/login")
   return (
