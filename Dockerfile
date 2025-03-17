@@ -7,7 +7,7 @@ EXPOSE 3000
 ENV PORT 3000
 ENV NODE_ENV production 
 
-WORKDIR /home/nextjs/app
+WORKDIR /yenisey_crypto_frontend
 
 COPY package.json .
 COPY package-lock.json .
