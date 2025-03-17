@@ -6,7 +6,7 @@ RUN apk add --no-cache libc6-compat
 
 EXPOSE 3000
 
-ENV PORT 3000
+
 
 
 # Сначала скопируйте ВСЕ файлы проекта
