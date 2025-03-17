@@ -14,8 +14,7 @@ COPY package.json .
 COPY package-lock.json .
 
 RUN npm install -f
-RUN npx browserslist@latest --update-db
-RUN npx next telemetry disable
+
 
 
 RUN npm install -D @swc/cli @swc/core
