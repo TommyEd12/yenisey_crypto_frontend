@@ -17,7 +17,7 @@ RUN npm cache clean --force
 RUN rm -rf node_modules
 RUN npm install --force
 
-COPY . .  # Копируйте все файлы, включая jsconfig.json или tsconfig.json
+COPY . .  
 
 RUN npm run build
 
