@@ -1,17 +1,32 @@
 FROM node:16.17.0-alpine3.15
-WORKDIR /yenisey_crypto_frontend
+
+RUN apk add --no-cache libc6-compat
+RUN npm i -g npm
+
+EXPOSE 3000
+
+ENV PORT 3000
+ENV NODE_ENV production
+
+WORKDIR /home/nextjs/app
+
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install --omit=optional
+RUN npx browserslist@latest --update-db
+RUN npx next telemetry disable
+
+# need to install linux specific swc builds
+RUN npm install -D @swc/cli @swc/core
+
 COPY . .
 
-
-RUN --mount=type=cache,id=npm,target=/npm/store npm install --prod --frozen-lockfile
-
-
-RUN --mount=type=cache,id=npm,target=/npm/store npm install --frozen-lockfile
 RUN npm run build
 
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
-USER root
-COPY --from=prod-deps /yenisey_crypto_frontend/node_modules /yenisey_crypto_frontend/node_modules
-COPY --from=build /yenisey_crypto_frontend/.next /yenisey_crypto_frontend/.next
-EXPOSE 8000
+USER nextjs
+
 CMD [ "npm", "start" ]
