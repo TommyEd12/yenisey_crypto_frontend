@@ -1,23 +1,25 @@
 FROM node:22-alpine
 
+WORKDIR /yenisey_crypto_frontend
+
 RUN apk add --no-cache libc6-compat
 
-EXPOSE 3000
+EXPOSE 8000
 
-ENV PORT 3000
-ENV NODE_ENV production 
+ENV PORT 8000
 
-WORKDIR /yenisey_crypto_frontend
+
+# Сначала скопируйте ВСЕ файлы проекта
+COPY . .
 
 COPY package.json .
 COPY package-lock.json .
+
 
 # Очистите кеш и переустановите зависимости (полезно для отладки проблем с модулями)
 RUN npm cache clean --force
 RUN rm -rf node_modules
 RUN npm install --force
-
-COPY . .  
 
 RUN npm run build
 
