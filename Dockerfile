@@ -1,4 +1,4 @@
-FROM node:16.17.0-alpine3.15
+FROM node:22-alpine
 
 RUN apk add --no-cache libc6-compat
 RUN npm i -g npm
@@ -6,7 +6,7 @@ RUN npm i -g npm
 EXPOSE 3000
 
 ENV PORT 3000
-ENV NODE_ENV production
+ENV NODE_ENV production 
 
 WORKDIR /home/nextjs/app
 
@@ -17,7 +17,7 @@ RUN npm install --omit=optional
 RUN npx browserslist@latest --update-db
 RUN npx next telemetry disable
 
-# need to install linux specific swc builds
+
 RUN npm install -D @swc/cli @swc/core
 
 COPY . .
