@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"] // Или путь к вашей директории компонентов
+    }
+  },
+  "exclude": ["node_modules"]
+}
