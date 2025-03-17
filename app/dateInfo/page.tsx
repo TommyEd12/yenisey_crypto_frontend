@@ -31,7 +31,7 @@ export const Page = () => {
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [firstDate, setFirstDate] = useState<Date>(
-    new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+    new Date(Date.now() - 2 * 24 * 60)
   );
   const [secondDate, setSecondDate] = useState<Date>(new Date());
 
@@ -242,7 +242,7 @@ export const Page = () => {
                     <TableCell className="font-medium">
                       <CustomTooltip content={token.contract}>
                         <span className="cursor-help">
-                          {shortenAddress(token.contract)}
+                          {token.contract? shortenAddress(token.contract) : "нет контракта"}
                         </span>
                       </CustomTooltip>
                     </TableCell>
