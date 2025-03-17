@@ -17,8 +17,6 @@ RUN npm install -f
 
 
 
-RUN npm install -D @swc/cli @swc/core
-
 COPY . .
 
 RUN npm run build
