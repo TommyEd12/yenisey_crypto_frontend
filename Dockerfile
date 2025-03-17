@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:16.17.0-alpine3.15
 WORKDIR /yenisey_crypto_frontend
 COPY . .
 
