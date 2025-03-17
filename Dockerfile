@@ -12,9 +12,12 @@ WORKDIR /home/nextjs/app
 COPY package.json .
 COPY package-lock.json .
 
+# Очистите кеш и переустановите зависимости (полезно для отладки проблем с модулями)
+RUN npm cache clean --force
+RUN rm -rf node_modules
 RUN npm install --force
 
-COPY . .
+COPY . .  # Копируйте все файлы, включая jsconfig.json или tsconfig.json
 
 RUN npm run build
 
