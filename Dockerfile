@@ -13,6 +13,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 FROM base
+USER root
 COPY --from=prod-deps /yenisey_crypto_frontend/node_modules /yenisey_crypto_frontend/node_modules
 COPY --from=build /yenisey_crypto_frontend/.next /yenisey_crypto_frontend/.next
 EXPOSE 8000
