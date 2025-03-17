@@ -13,7 +13,7 @@ WORKDIR /home/nextjs/app
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm install --omit=optional
+RUN npm install -f
 RUN npx browserslist@latest --update-db
 RUN npx next telemetry disable
 
