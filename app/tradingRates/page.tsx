@@ -32,7 +32,7 @@ export const Page = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [firstDate, setFirstDate] = useState<Date>(
-    new Date(Date.now() - 2 * 24 * 60)
+    new Date(Date.now() - 2 * 24 * 60 * 60 * 3)
   );
   const [secondDate, setSecondDate] = useState<Date>(new Date());
 
