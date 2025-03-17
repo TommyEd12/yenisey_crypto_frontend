@@ -4,9 +4,9 @@ WORKDIR /yenisey_crypto_frontend
 
 RUN apk add --no-cache libc6-compat
 
-EXPOSE 8000
+EXPOSE 3000
 
-ENV PORT 8000
+ENV PORT 3000
 
 
 # Сначала скопируйте ВСЕ файлы проекта
